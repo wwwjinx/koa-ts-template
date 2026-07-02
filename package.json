@@ -1,0 +1,35 @@
+{
+  "name": "sms",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "set NODE_ENV=dev&&tsx watch ./src/app.ts",
+    "start-notes": "注释: 部署需要build 运行 start",
+    "start": "set NODE_ENV=prod&&node ./dist/app.js",
+    "build": "tsc && tsc-alias"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "http-errors": "^2.0.0",
+    "koa": "^2.15.3",
+    "koa-body": "^6.0.1",
+    "koa-router": "^13.0.1",
+    "log4js": "^6.9.1",
+    "pm2": "^5.4.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.1.1",
+    "@types/http-errors": "^2.0.4",
+    "@types/koa": "^2.15.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^22.13.1",
+    "eslint": "^9.20.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
