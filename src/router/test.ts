@@ -1,30 +1,16 @@
+import Router from '@koa/router'
 import createError from 'http-errors'
-import Router from 'koa-router'
 
 const router = new Router({
   prefix: '/test',
 })
 
-router.get('/err', async (ctx) => {
-  ctx.throw(createError[501]('test error'))
+router.get('/err', (ctx) => {
+  ctx.throw(createError(501, 'test error'))
 })
 
-// router.get(['/:id', '/'], async (ctx) => {
-//   const params = ctx.params
-//   if (params.id) {
-//     ctx.body = {
-//       content: `test get success, id: ${params.id}`,
-//     }
-//   }
-//   else {
-//     ctx.body = {
-//       content: `test get success`,
-//     }
-//   }
-// })
-
-router.post('/', async (ctx) => {
-  ctx.body = {
+router.post('/', (ctx) => {
+  ctx.data = {
     content: 'test post success',
     data: ctx.request.body,
   }

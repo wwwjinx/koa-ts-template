@@ -4,4 +4,5 @@ export default antfu({
   vue: false,
   jsx: false,
   test: false,
+  pnpm: false,
 })

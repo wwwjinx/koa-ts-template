@@ -2,34 +2,39 @@
   "name": "sms",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
+  "description": "Koa + TypeScript backend template",
   "author": "",
   "license": "ISC",
   "keywords": [],
   "main": "src/app.ts",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "dev": "set NODE_ENV=dev&&tsx watch ./src/app.ts",
-    "start-notes": "注释: 部署需要build 运行 start",
-    "start": "set NODE_ENV=prod&&node ./dist/app.js",
-    "build": "tsc && tsc-alias"
+    "dev": "cross-env NODE_ENV=dev tsx watch ./src/app.ts",
+    "start": "cross-env NODE_ENV=prod node ./dist/app.js",
+    "build": "tsc && tsc-alias",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "http-errors": "^2.0.0",
-    "koa": "^2.15.3",
-    "koa-body": "^6.0.1",
-    "koa-router": "^13.0.1",
+    "@koa/router": "^15.7.0",
+    "dotenv": "^17.4.2",
+    "http-errors": "^2.0.1",
+    "koa": "^3.2.1",
+    "koa-body": "^8.0.1",
     "log4js": "^6.9.1",
-    "pm2": "^5.4.3"
+    "pm2": "^7.0.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.1.1",
-    "@types/http-errors": "^2.0.4",
-    "@types/koa": "^2.15.0",
-    "@types/koa-router": "^7.4.8",
-    "@types/node": "^22.13.1",
-    "eslint": "^9.20.0",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "@antfu/eslint-config": "^9.5.1",
+    "@types/http-errors": "^2.0.5",
+    "@types/koa": "^3.0.3",
+    "@types/node": "^22.20.3",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.10.0",
+    "tsc-alias": "^1.9.5",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3"
   }
 }

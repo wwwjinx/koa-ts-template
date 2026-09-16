@@ -8,39 +8,43 @@ import responseHandle from './middleware/response-handle.js'
 import router from './router/index.js'
 import { getIpAddress } from './utils/index.js'
 import './config/index.js'
+import './types/koa.js'
 
-const port = process.env.APP_PORT || 3001
+const port = Number(process.env.APP_PORT) || 3001
 const app = new Koa()
 
-// 使用 koa-body 中间件
-app.use(koaBody())
+app.proxy = false
 
-// 日志
-app.use(loggerMiddleware)
-
-// Error Handler
 app.use(errorHandle)
 
-// 响应中间件
-app.use(responseHandle)
+app.use(koaBody({
+  jsonLimit: '1mb',
+  formLimit: '1mb',
+  textLimit: '1mb',
+  multipart: false,
+}))
 
-// 使用路由中间件
+app.use(loggerMiddleware)
+app.use(responseHandle)
 app.use(router.routes())
 app.use(router.allowedMethods())
+
+app.use((ctx) => {
+  ctx.throw(404, 'not found')
+})
 
 const server = http.createServer(app.callback())
 
 server.listen(port)
 
 server.on('error', (err: Error) => {
-  // eslint-disable-next-line no-console
-  console.log('server error', err)
+  console.error('server error', err)
+  process.exit(1)
 })
 
 server.on('listening', () => {
   const ip = getIpAddress()
   const address = `http://${ip}:${port}`
   const localAddress = `http://localhost:${port}`
-  // eslint-disable-next-line no-console
-  console.log(`app started at address \n${localAddress}\n${address}`)
+  console.warn(`app started at address \n${localAddress}\n${address}`)
 })
