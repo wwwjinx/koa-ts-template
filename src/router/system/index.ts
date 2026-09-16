@@ -1,5 +1,5 @@
 import type { Context, DefaultState } from 'koa'
-import Router from 'koa-router'
+import Router from '@koa/router'
 import dictRouter from './dict.js'
 
 const router = new Router<DefaultState, Context>({

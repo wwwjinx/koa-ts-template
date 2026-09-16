@@ -1,38 +1,40 @@
 import type { HttpError } from 'http-errors'
 import type { Context, Next } from 'koa'
 import process from 'node:process'
-import { ResponseCode, ResponseMsg } from '@/emuns/index.js'
-import { errLogger, logger } from '../log/index.js'
+import { ResponseCode, ResponseMsg } from '@/enums/index.js'
+import { errLogger } from '../log/index.js'
+
+function isHttpError(err: unknown): err is HttpError {
+  return typeof err === 'object' && err !== null && 'message' in err
+}
 
 /**
- * 错误处理
- * 抛出错误 ctx.throw({
-    code: 5010,
-    message: 'test Error get',
-  })
+ * Unified error handler.
+ * Throw with ctx.throw() or http-errors, e.g. ctx.throw(401, 'unauthorized')
  */
 async function errorHandle(ctx: Context, next: Next) {
-  return next().catch((err: HttpError) => {
+  try {
+    await next()
+  }
+  catch (err: unknown) {
     if (process.env.NODE_ENV === 'dev') {
-      console.log('====================')
-      console.log(err)
-      console.log('====================')
+      console.error('====================')
+      console.error(err)
+      console.error('====================')
     }
+
+    const httpError = isHttpError(err) ? err : undefined
 
     ctx.body = {
-      code: err.statusCode || ResponseCode.ERROR,
+      code: httpError?.statusCode || ResponseCode.ERROR,
       data: null,
-      message: err.message || ResponseMsg.ERROR,
+      message: httpError?.message || ResponseMsg.ERROR,
     }
 
-    // 保证返回状态是 200
     ctx.status = 200
 
-    // 错误日志
     errLogger.error(err)
-
-    return Promise.resolve()
-  })
+  }
 }
 
 export default errorHandle

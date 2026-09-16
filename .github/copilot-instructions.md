@@ -3,7 +3,7 @@
 本文件用于指导 GitHub Copilot 生成符合 Koa 项目需求的代码。项目技术栈包括：
 - Koa
 - TypeScript
-- Koa Router
+- @koa/router
 - Koa Body
 <!-- - Koa Static -->
 <!-- - Koa CORS -->
@@ -59,7 +59,7 @@
 ### 1. 用户认证
 - 实现登录和注册功能。
 - 使用 JWT 进行身份验证。
-- 使用 `koa-router` 定义路由。
+- 使用 `@koa/router` 定义路由。
 
 ### 2. 数据管理
 - 实现 CRUD 操作。
@@ -80,7 +80,7 @@
 
 ### 1. 使用 Koa Router 定义路由
 ```typescript
-import Router from 'koa-router'
+import Router from '@koa/router'
 import { login, register } from '../controllers/user-controller'
 
 const router = new Router()

@@ -1,12 +1,11 @@
 import type { Context, DefaultState } from 'koa'
-import Router from 'koa-router'
+import Router from '@koa/router'
 
-// 解决 ts 无法识别 自定义类型问题
 const router = new Router<DefaultState, Context>({
   prefix: '/dict',
 })
 
-router.get('/getDict/:dictName', async (ctx) => {
+router.get('/getDict/:dictName', (ctx) => {
   const params = ctx.params
 
   ctx.data = [
